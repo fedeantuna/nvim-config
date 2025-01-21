@@ -10,6 +10,10 @@ return {
             ensure_installed = {
                 -- lua
                 "lua_ls",
+
+                -- python
+                "pyright",
+                "ruff",
             },
         },
     },
@@ -25,6 +29,19 @@ return {
                     Lua = {
                         diagnostics = {
                             enable = false,
+                        },
+                    },
+                },
+            })
+            lspconfig.ruff.setup({})
+            lspconfig.pyright.setup({
+                settings = {
+                    pyright = {
+                        disableOrganizeImports = true,
+                    },
+                    python = {
+                        analysis = {
+                            ignore = { "*" },
                         },
                     },
                 },
@@ -74,6 +91,13 @@ return {
                         vim.keymap.set("n", "<leader>gt", function()
                             vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
                         end, buffer_opts)
+                    end
+
+                    if client == nil then
+                        return
+                    end
+                    if client.name == "ruff" then
+                        client.server_capabilities.hoverProvider = false
                     end
                 end,
             })

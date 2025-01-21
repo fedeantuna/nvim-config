@@ -1,6 +1,9 @@
 return {
     {
         "nvimtools/none-ls.nvim",
+        dependencies = {
+            "nvimtools/none-ls-extras.nvim",
+        },
         config = function()
             local null_ls = require("null-ls")
             null_ls.setup({
@@ -8,6 +11,10 @@ return {
                     -- lua
                     null_ls.builtins.diagnostics.selene,
                     null_ls.builtins.formatting.stylua,
+
+                    -- python
+                    require("none-ls.formatting.ruff"),
+                    require("none-ls.formatting.ruff_format"),
                 },
                 on_attach = function(client, bufnr)
                     local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
