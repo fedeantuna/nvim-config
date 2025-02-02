@@ -1,11 +1,13 @@
+local nvim_config_lua_path = vim.fn.stdpath("config") .. "/lua/"
+
 ---@param plugin string
 function setup_for_plugin(plugin)
-    local path = "lua/config/plugins/" .. plugin
+    local relative_path = "config/plugins/" .. plugin
 
-    for filename in io.popen('ls -pUqAL "' .. path .. '"'):lines() do
+    for filename in io.popen('ls -pUqAL "' .. nvim_config_lua_path .. relative_path .. '"'):lines() do
         filename = filename:match("^(.*)%.lua$")
         if filename then
-            require(path:gsub("/", ".") .. "." .. filename).setup()
+            require(relative_path:gsub("/", ".") .. "." .. filename).setup()
         end
     end
 end
@@ -15,12 +17,12 @@ end
 function get_for_plugin(fn, plugin)
     local modules = {}
     local index = 0
-    local path = "lua/config/plugins/" .. plugin
+    local relative_path = "config/plugins/" .. plugin
 
-    for filename in io.popen('ls -pUqAL "' .. path .. '"'):lines() do
+    for filename in io.popen('ls -pUqAL "' .. nvim_config_lua_path .. relative_path .. '"'):lines() do
         filename = filename:match("^(.*)%.lua$")
         if filename then
-            local partial_module_list = fn(path, filename)
+            local partial_module_list = fn(relative_path, filename)
             for i = 0, #partial_module_list do
                 if partial_module_list[i] ~= nil then
                     modules[index] = partial_module_list[i]
@@ -42,15 +44,14 @@ end
 ---@param path string
 ---@param filename string
 function get_module_names_from_path(path, filename)
-    local test = require(path:gsub("/", ".") .. "." .. filename).get_module_names()
-    return test
+    return require(path:gsub("/", ".") .. "." .. filename).get_module_names()
 end
 
 local M = {}
 
 ---@param path string
 function M.load_from(path)
-    for filename in io.popen('ls -pUqAL "' .. "lua/" .. path .. '"'):lines() do
+    for filename in io.popen('ls -pUqAL "' .. nvim_config_lua_path .. path .. '"'):lines() do
         filename = filename:match("^(.*)%.lua$")
         if filename then
             require(path:gsub("/", ".") .. "." .. filename)
