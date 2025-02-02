@@ -1,5 +1,12 @@
-require("mason").setup()
-require("mason-lspconfig").setup()
+local loader = require("utils.loader")
+local module_names = loader.get_plugin_module_names("lsp")
+
+require("mason-lspconfig").setup({
+    ensure_installed = module_names,
+    automatic_installation = true,
+})
+
+loader.setup_plugin_modules("lsp")
 
 vim.api.nvim_create_autocmd("LspAttach", {
     desc = "LSP actions",

@@ -83,7 +83,7 @@ dashboard.section.buttons.val = {
     dashboard.button("f", " Find files", "<cmd>Telescope find_files<CR>"),
     dashboard.button("o", " Recent files", "<cmd>Telescope oldfiles<CR>"),
     dashboard.button("z", " Find text", "<cmd>Telescope live_grep<CR>"),
-    dashboard.button("x", " Explore", "<cmd>Neotree float<CR>"),
+    dashboard.button("x", " Explore", "<cmd>NvimTreeToggle<CR>"),
     dashboard.button("q", " Quit", "<cmd>qa<CR>"),
 }
 
