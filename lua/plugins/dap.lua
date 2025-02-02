@@ -40,10 +40,4 @@ return {
             "nvim-neotest/nvim-nio",
         },
     },
-    {
-        "jay-babu/mason-nvim-dap.nvim",
-        dependencies = {
-            "williamboman/mason.nvim",
-        },
-    },
 }
