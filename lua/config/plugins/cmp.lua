@@ -26,8 +26,17 @@ local kind_icons = {
     Event = "",
     Operator = "󰆕",
     TypeParameter = "󰊄",
+    Version = "🅥 ",
+    Feature = "🅕 ",
 }
 
+require("crates").setup({
+    completion = {
+        cmp = {
+            enabled = true,
+        },
+    },
+})
 local cmp = require("cmp")
 local luasnip = require("luasnip")
 
@@ -85,6 +94,7 @@ cmp.setup({
         { name = "luasnip" },
         { name = "buffer" },
         { name = "path" },
+        { name = "crates" },
     }),
     formatting = {
         fields = { "kind", "abbr", "menu" },
@@ -95,6 +105,7 @@ cmp.setup({
                 luasnip = "[Snippet]",
                 buffer = "[Buffer]",
                 path = "[Path]",
+                crates = "[Crates]",
             })[entry.source.name]
             return vim_item
         end,
